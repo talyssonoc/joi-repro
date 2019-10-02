@@ -19,7 +19,7 @@ class User {
 
 User.schema = Joi.object({
   name: joi.string().min(2),
-  friends: joi.array().items(Joi.link('#friend'))
+  friends: joi.array().items(joi.link('#friend'))
 })
   .id('user');
 
