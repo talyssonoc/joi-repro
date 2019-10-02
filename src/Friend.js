@@ -16,7 +16,7 @@ class Friend {
   }
 }
 
-Friend.schema = Joi.object({
+Friend.schema = joi.object({
   since: joi.date(),
   user: joi.link('#user')
 })
