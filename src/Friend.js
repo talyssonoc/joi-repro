@@ -9,19 +9,17 @@ class Friend {
   validate() {
     const User = require('./User');
 
-    const schema = joi.object().keys({
-      ...Friend.schema,
-
-      // This won't work, the explanation is in User.js
-      user: User.schema
-    })
+    const schema = Friend.schema
+      .shared(User.schema);
 
     return schema.validate(this);
   }
 }
 
-Friend.schema = {
-  since: joi.date()
-};
+Friend.schema = Joi.object({
+  since: joi.date(),
+  user: Joi.link('#user')
+})
+  .id('friend');
 
 module.exports = Friend;
