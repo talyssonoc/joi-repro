@@ -1,26 +1,31 @@
-const joi = require('@hapi/joi');
+const Joi = require('@hapi/joi');
 
 
 class User {
-  constructor({ name, friends }) {
-    this.name = name;
-    this.friends = friends;
-  }
 
-  validate() {
-    const Friend = require('./Friend');
+    constructor({ name, friends }) {
 
-    const schema = User.schema
-      .shared(Friend.schema);
+        this.name = name;
+        this.friends = friends;
+    }
 
-    return schema.validate(this);
-  }
+    validate() {
+
+        const Friend = require('./Friend');
+
+        const schema = User.schema
+            .shared(Friend.schema);
+
+        return schema.validate(this);
+    }
 }
 
-User.schema = joi.object({
-  name: joi.string().min(2),
-  friends: joi.array().items(joi.link('#friend'))
+
+User.schema = Joi.object({
+    name: Joi.string().min(2),
+    friends: Joi.array().items(Joi.link('#friend-base'))
 })
-  .id('user');
+    .id('user-base');
+
 
 module.exports = User;
